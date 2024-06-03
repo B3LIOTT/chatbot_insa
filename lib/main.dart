@@ -33,6 +33,9 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Chat-Bot-INSA',
       home: HomePage(),
+      theme: ThemeData(
+        useMaterial3: true,
+      )
     );
   }
 }
