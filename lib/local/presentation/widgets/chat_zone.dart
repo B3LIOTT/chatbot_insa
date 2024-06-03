@@ -7,6 +7,8 @@ import 'package:chatbot_insa/remote/messages_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../config/app_theme.dart';
+
 
 class ChatZone extends ConsumerStatefulWidget {
 
@@ -52,7 +54,25 @@ class _ChatZoneState extends ConsumerState<ChatZone>
       physics: const BouncingScrollPhysics(),
       itemCount: messages.length,
       itemBuilder: (context, index) {
-        return MessageWidget(message: messages[index]);
+        if (messages[index].sender == 'user') {
+          final theme = AppTheme.getUserTheme();
+          return Align(
+            alignment: Alignment.centerRight,
+            child: MessageWidget(
+                message: messages[index],
+                theme: theme
+            ),
+          );
+        } else {
+          final theme = AppTheme.getBotTheme();
+          return Align(
+            alignment: Alignment.centerLeft,
+            child: MessageWidget(
+                message: messages[index],
+                theme: theme
+            ),
+          );
+        }
       },
     );
   }
