@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'local/config/env_loader.dart';
 import 'local/presentation/pages/home.dart';
@@ -20,7 +21,9 @@ Future<void> main() async {
   // initialisation des variables d'envoronnement
   EnvLoader.initEnv();
 
-  runApp(const App());
+  runApp(const ProviderScope(
+      child: App()
+  ));
 }
 
 class App extends StatelessWidget {

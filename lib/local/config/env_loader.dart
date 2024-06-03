@@ -5,6 +5,6 @@ class EnvLoader {
   static late String serverUrl;
 
   static Future<void> initEnv() async {
-    await dotenv.load(fileName: ".env");
+    //await dotenv.load(fileName: ".env");
   }
 }
