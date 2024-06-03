@@ -11,15 +11,15 @@ class AppTheme {
 
   static Map<String, Color> getUserTheme() {
     return {
-      'message': primaryColor,
+      'ui': primaryColor,
       'text': black,
     };
   }
 
   static Map<String, Color> getBotTheme() {
     return {
-      'message': secondaryColor,
-      'text': white,
+      'ui': secondaryColor,
+      'text': black,
     };
   }
 }

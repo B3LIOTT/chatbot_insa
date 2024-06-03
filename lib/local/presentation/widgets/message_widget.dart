@@ -29,7 +29,7 @@ class MessageWidget extends StatelessWidget {
               color: AppTheme.white,
               borderRadius: BorderRadius.circular(20),
               border: Border(
-                bottom: BorderSide(width: 4, color: theme['message']!),
+                bottom: BorderSide(width: 4, color: theme['ui']!),
               )
             ),
             child: Padding(
