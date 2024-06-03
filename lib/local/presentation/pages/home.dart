@@ -1,3 +1,4 @@
+import 'package:chatbot_insa/local/config/app_theme.dart';
 import 'package:chatbot_insa/local/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import '../widgets/chat_zone.dart';

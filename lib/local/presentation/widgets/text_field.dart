@@ -67,9 +67,11 @@ class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTi
                       ),
                       onPressed: () {
                         HapticFeedback.lightImpact();
+                        if (_message.isEmpty) return;
                         ref.read(messagesStateProvider.notifier).addMessage(_message);
                         _ac.forward();
                         _controller.clear();
+                        _message = "";
                       }
                   )
               ),
@@ -92,14 +94,15 @@ class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTi
         onTapOutside: (event) {
           FocusScope.of(context).unfocus();
         },
+        cursorColor: AppTheme.primaryColor,
         controller: _controller,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           hintText: "Que voulez-vous savoir ?",
-          border: OutlineInputBorder(
+          enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
             borderSide: const BorderSide(
-              color: AppTheme.txtFieldColor
+              color: AppTheme.white
             )
           ),
           focusedBorder: OutlineInputBorder(
@@ -121,8 +124,28 @@ class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTi
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Container(
-      height: h*0.10,
+      height: 100,
       width: w,
+      decoration: BoxDecoration(
+        color: AppTheme.white.withAlpha(120),
+        border: const Border(
+          top: BorderSide(
+            color: AppTheme.primaryColor,
+            width: 3
+          )
+        ),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20)
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.black.withOpacity(0.12),
+            blurRadius: 10,
+            offset: const Offset(0, -5)
+          )
+        ]
+      ),
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: MediaQuery.of(context).padding.bottom),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

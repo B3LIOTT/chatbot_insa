@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'local/config/env_loader.dart';
 import 'local/presentation/pages/home.dart';
 //import 'package:flutter_displaymode/flutter_displaymode.dart';
