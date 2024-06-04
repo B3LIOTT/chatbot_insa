@@ -26,7 +26,7 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
       receiver: "bot",
       timestamp: DateTime.now().toIso8601String(),
     );
-    List<Message> newMessages = List.from(state.messages.getRange(nMessage-50, nMessage))..add(newMessage);
+    List<Message> newMessages = List.from(state.messages)..add(newMessage);
     final newMessagesState = MessagesState(messages: newMessages, newMessageId: id);
     updateState(newMessagesState);
     LocalStorage.setMessages(newMessages);
