@@ -87,41 +87,35 @@ class _MessageWidgetState extends State<MessageWidget> with SingleTickerProvider
           )),
       Column(
         children: [
-          Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Card(
-                elevation: 6,
-                surfaceTintColor: AppTheme.white,
-                color: widget.theme['ui']!,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    widget.message.sender=='user'? Icons.person : Icons.computer,
-                    color: AppTheme.white,
-                    size: 10,
-                  ),
-                ),
-              )
+          Card(
+            elevation: 6,
+            surfaceTintColor: AppTheme.white,
+            color: widget.theme['ui']!,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                widget.message.sender=='user'? Icons.person : Icons.computer,
+                color: AppTheme.white,
+                size: 10,
+              ),
+            ),
           ),
-          Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Card(
-                  elevation: 6,
-                  surfaceTintColor: AppTheme.white,
-                  color: widget.theme['ui']!,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "${DateTime.parse(widget.message.timestamp).hour}:${DateTime.parse(widget.message.timestamp).minute}",
-                      style: const TextStyle(color: AppTheme.white, fontSize: 10),
-                    ),)
-              )
+          Card(
+              elevation: 6,
+              surfaceTintColor: AppTheme.white,
+              color: widget.theme['ui']!,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "${DateTime.parse(widget.message.timestamp).hour}:${DateTime.parse(widget.message.timestamp).minute}",
+                  style: const TextStyle(color: AppTheme.white, fontSize: 10),
+                ),)
           ),
         ],
       ),
