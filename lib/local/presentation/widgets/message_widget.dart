@@ -59,6 +59,9 @@ class _MessageWidgetState extends State<MessageWidget> with SingleTickerProvider
             ),
             margin: const EdgeInsets.all(8),
             child: Container(
+              constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * 0.7,
+            ),
               margin: const EdgeInsets.all(0),
               decoration: BoxDecoration(
                   color: !widget.message.hasError? AppTheme.white : AppTheme.red.withOpacity(0.1),
