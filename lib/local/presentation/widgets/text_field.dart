@@ -68,7 +68,11 @@ class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTi
                       onPressed: () {
                         HapticFeedback.lightImpact();
                         if (_message.isEmpty) return;
-                        ref.read(messagesStateProvider.notifier).addMessage(_message);
+                        ref.read(messagesStateProvider.notifier).addMessage(
+                            message: _message,
+                            sender: "user",
+                            receiver: "bot"
+                        );
                         _ac.forward();
                         _controller.clear();
                         _message = "";
@@ -92,7 +96,7 @@ class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTi
       ),
       child: TextField(
         onTapOutside: (event) {
-          FocusScope.of(context).unfocus();
+          //FocusScope.of(context).unfocus();
         },
         cursorColor: AppTheme.primaryColor,
         controller: _controller,

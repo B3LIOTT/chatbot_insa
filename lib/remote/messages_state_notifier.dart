@@ -1,25 +1,34 @@
 import 'package:chatbot_insa/local/models/message.dart';
+import 'package:chatbot_insa/local/storage/local_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'messages_state.dart';
 
 
 class MessageStateNotifier extends StateNotifier<MessagesState> {
 
-  MessageStateNotifier() : super(const MessagesState());
+  MessageStateNotifier() : super(MessagesState(
+    isLoading: false,
+    hasError: false,
+    messages: LocalStorage.getMessages(),
+  ));
 
   void updateState(MessagesState newState) {
     state = newState;
   }
 
-  void addMessage(String message) {
+  void addMessage({required String message, required String sender, required String receiver}) {
+    int nMessage = state.messages.length;
+    int id = nMessage + 1;
     Message newMessage = Message(
-      id: state.messages.length + 1,
+      id: id,
       message: message,
       sender: "user",
       receiver: "bot",
       timestamp: DateTime.now().toIso8601String(),
     );
-    final newMessages = MessagesState(messages: [...state.messages, newMessage]);
-    updateState(newMessages);
+    List<Message> newMessages = List.from(state.messages.getRange(nMessage-50, nMessage))..add(newMessage);
+    final newMessagesState = MessagesState(messages: newMessages, newMessageId: id);
+    updateState(newMessagesState);
+    LocalStorage.setMessages(newMessages);
   }
 }

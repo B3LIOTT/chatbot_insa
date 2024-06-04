@@ -1,3 +1,4 @@
+import 'package:chatbot_insa/local/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +20,9 @@ Future<void> main() async {
 
   // initialisation des variables d'envoronnement
   EnvLoader.initEnv();
+
+  // initialisation des shared preferences
+  await LocalStorage.initPrefs();
 
   runApp(const ProviderScope(
       child: App()
