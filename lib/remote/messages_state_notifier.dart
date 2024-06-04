@@ -30,5 +30,22 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     final newMessagesState = MessagesState(messages: newMessages, newMessageId: id);
     updateState(newMessagesState);
     LocalStorage.setMessages(newMessages);
+
+    // Simulate bot response
+    Future.delayed(const Duration(seconds: 1), () {
+      int nMessage = state.messages.length;
+      int id = nMessage + 1;
+      Message newMessage = Message(
+        id: id,
+        message: "Tg.",
+        sender: "bot",
+        receiver: "user",
+        timestamp: DateTime.now().toIso8601String(),
+      );
+      List<Message> newMessages = List.from(state.messages)..add(newMessage);
+      final newMessagesState = MessagesState(messages: newMessages, newMessageId: id);
+      updateState(newMessagesState);
+      LocalStorage.setMessages(newMessages);
+    });
   }
 }
