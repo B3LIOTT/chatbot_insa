@@ -131,7 +131,7 @@ class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTi
       height: 100,
       width: w,
       decoration: BoxDecoration(
-        color: AppTheme.white.withAlpha(120),
+        color: AppTheme.white,
         border: const Border(
           top: BorderSide(
             color: AppTheme.primaryColor,

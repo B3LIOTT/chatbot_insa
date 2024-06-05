@@ -43,4 +43,13 @@ class Message {
       'timestamp': timestamp,
     };
   }
+
+  Map<String, dynamic> toSocket() {
+    return {
+      'message': message,
+      'sender': sender,
+      'receiver': receiver,
+      'timestamp': timestamp,
+    };
+  }
 }

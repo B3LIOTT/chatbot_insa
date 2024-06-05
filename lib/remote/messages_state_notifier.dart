@@ -16,7 +16,7 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     state = newState;
   }
 
-  void addMessage({required String message, required String sender, required String receiver}) {
+  Future<void> addMessage({required String message, required String sender, required String receiver}) async {
     int nMessage = state.messages.length;
     int id = nMessage + 1;
     Message newMessage = Message(
@@ -32,7 +32,11 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     LocalStorage.setMessages(newMessages);
 
     // Simulate bot response
-    Future.delayed(const Duration(seconds: 1), () {
+    await Future.delayed(const Duration(seconds: 1), () {
+      final newMessagesState = MessagesState(messages: newMessages, isLoading: true);
+      updateState(newMessagesState);
+    });
+    Future.delayed(const Duration(seconds: 2), () {
       int nMessage = state.messages.length;
       int id = nMessage + 1;
       Message newMessage = Message(

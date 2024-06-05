@@ -17,15 +17,53 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
-    return const Scaffold(
-      backgroundColor: Colors.white,
+    return Scaffold(
+      backgroundColor: AppTheme.white,
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            Expanded(
-              child: ChatZone()
+            const ChatZone(),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: h*0.1,
+                decoration: BoxDecoration(
+                    color: AppTheme.white,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                    border: const Border(
+                        bottom: BorderSide(
+                            color: AppTheme.primaryColor,
+                            width: 3
+                        )
+                    ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppTheme.black.withOpacity(0.12),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5)
+                    )
+                  ]
+                ),
+                child: const Center(
+                  child: Text(
+                    "ChatBot INSA",
+                    style: TextStyle(
+                      color: AppTheme.primaryColor,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 5
+                    ),
+                  ),
+                ),
+              ),
             ),
-            PromptTextFiled()
+            const Align(
+              alignment: Alignment.bottomCenter,
+                child: PromptTextFiled()
+            ),
           ],
         ),
       ),
