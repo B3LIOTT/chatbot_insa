@@ -1,23 +1,19 @@
 import 'package:chatbot_insa/local/config/app_theme.dart';
 import 'package:chatbot_insa/local/config/env_loader.dart';
 import 'package:chatbot_insa/local/presentation/pages/home.dart';
-import 'package:chatbot_insa/local/presentation/providers/messages_state_provider.dart';
 import 'package:chatbot_insa/local/presentation/widgets/loading.dart';
-import 'package:chatbot_insa/remote/messages_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
 
 
-class ConnexionCheck extends ConsumerStatefulWidget {
+class ConnexionCheck extends StatefulWidget {
   const ConnexionCheck({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ConnexionCheckState();
+  _ConnexionCheckState createState() => _ConnexionCheckState();
 }
 
-class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
+class _ConnexionCheckState extends State<ConnexionCheck> {
   Widget mainW = const Loading();
   bool _showBtn = false;
 
@@ -63,12 +59,7 @@ class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
         });
       }
  */
-      ref.read(messagesStateProvider.notifier).updateState(const MessagesState(
-        isSocketConnected: true,
-      ));
-      setState(() {
-        mainW = const HomePage();
-      });
+      // TODO: update value ???
     } catch (e) {
       print(e);
     }

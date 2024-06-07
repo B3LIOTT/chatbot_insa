@@ -1,4 +1,5 @@
 import 'package:chatbot_insa/local/models/message.dart';
+import 'package:chatbot_insa/local/presentation/pages/connection_check.dart';
 import 'package:chatbot_insa/local/presentation/providers/messages_state_provider.dart';
 import 'package:chatbot_insa/local/presentation/widgets/loading_message.dart';
 import 'package:chatbot_insa/local/presentation/widgets/message_widget.dart';
@@ -97,9 +98,9 @@ class _ChatZoneState extends ConsumerState<ChatZone>
                   children: [
                     state.isLoading
                         ? const Align(
-                            alignment: Alignment.centerLeft,
-                            child: LoadingMessageWidget(),
-                          )
+                      alignment: Alignment.centerLeft,
+                      child: LoadingMessageWidget(),
+                    )
                         : Container(),
                     const SizedBox(height: 30),
                   ],
