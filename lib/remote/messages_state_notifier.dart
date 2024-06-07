@@ -66,22 +66,6 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
   });
 
 
-  void sendMessage({
-    required String message,
-  }) => socket.emit(EnvLoader.sendMessageEvent, {
-    'message': message,
-  });
-
-  void disconnect() {
-    socket.emit(EnvLoader.disconnectEvent, {});
-    socket.disconnect();
-    if(kDebugMode) {
-      print('Disconnected from the server');
-    }
-    updateState(state.copyWith(isLoading: false));
-  }
-
-
   void initSocket() {
     try {
       socket.connect();
@@ -135,4 +119,19 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     }
   }
 
+
+  void sendMessage({
+    required String message,
+  }) => socket.emit(EnvLoader.sendMessageEvent, {
+    'message': message,
+  });
+
+  void disconnect() {
+    socket.emit(EnvLoader.disconnectEvent, {});
+    socket.disconnect();
+    if(kDebugMode) {
+      print('Disconnected from the server');
+    }
+    updateState(state.copyWith(isLoading: false));
+  }
 }

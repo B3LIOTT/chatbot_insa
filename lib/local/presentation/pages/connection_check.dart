@@ -1,21 +1,25 @@
 import 'package:chatbot_insa/local/config/app_theme.dart';
-import 'package:chatbot_insa/local/config/env_loader.dart';
-import 'package:chatbot_insa/local/presentation/pages/home.dart';
 import 'package:chatbot_insa/local/presentation/widgets/loading.dart';
+import 'package:chatbot_insa/remote/request_handler.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-class ConnexionCheck extends StatefulWidget {
-  const ConnexionCheck({super.key});
+class ConnexionCheck extends ConsumerStatefulWidget {
+  final ValueChanged<bool> update;
+
+  const ConnexionCheck({required this.update, super.key});
 
   @override
-  _ConnexionCheckState createState() => _ConnexionCheckState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ConnexionCheckState();
 }
 
-class _ConnexionCheckState extends State<ConnexionCheck> {
+class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
   Widget mainW = const Loading();
   bool _showBtn = false;
+
 
   @override
   void initState() {
@@ -24,9 +28,9 @@ class _ConnexionCheckState extends State<ConnexionCheck> {
   }
 
   Widget errW() {
-    return Scaffold(
-      backgroundColor: Theme.of(context).cardColor,
-      body: const Center(
+    return const Scaffold(
+      backgroundColor: AppTheme.white,
+      body: Center(
           child: Center(child: Text("Erreur lors de la connexion au serveur", style: TextStyle(fontSize: 35, color: AppTheme.secondaryColor ), textAlign: TextAlign.center,))),
     );
   }
@@ -37,42 +41,34 @@ class _ConnexionCheckState extends State<ConnexionCheck> {
         mainW = const Loading();
         _showBtn = false;
       });
-/*
-      var res = await http.Client().get(
-          Uri.parse(
-              '${EnvLoader.serverUrl}/${EnvLoader.accessTokenUrl}'),
-          headers: <String, String>{
-            'x-api-key': EnvLoader.apiKEY,
-          }).timeout(const Duration(seconds: 10),
-          onTimeout: () => http.Response("timeout", 408));
 
-      // recupération des données utilisateur si il y a une connexion internet
-      if (res.statusCode == 200) {
+      // TODO: à enlever, c'est pour l'exemple
+      await Future.delayed(const Duration(seconds: 2));
 
-      } else {
-        ref.watch(userStateProvider.notifier).updateState(const UserConnectionState(
-          response: {},
-        ));
-        setState(() {
-          mainW = errW();
-          _showBtn = true;
-        });
-      }
- */
-      // TODO: update value ???
+      await getAccessToken();
+      widget.update(true);
+
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
+      widget.update(false);
+      setState(() {
+        mainW = errW();
+        _showBtn = true;
+      });
     }
   }
 
   Widget btn(double w) {
     return Card(
-      elevation: 18,
+      elevation: 10,
       color: AppTheme.secondaryColor,
       surfaceTintColor: AppTheme.white,
-      shadowColor: Theme.of(context).shadowColor,
+      shadowColor: AppTheme.black.withOpacity(0.8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(20),
         onTap: () {
           HapticFeedback.lightImpact();
           _initUserData();

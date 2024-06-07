@@ -10,7 +10,7 @@ class Loading extends StatelessWidget {
       color: Theme.of(context).cardColor,
       child: const Center(
         child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primaryColor),
+          valueColor: AlwaysStoppedAnimation<Color>(AppTheme.secondaryColor),
         ),
       ),
     );

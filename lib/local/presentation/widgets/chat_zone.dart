@@ -1,5 +1,4 @@
 import 'package:chatbot_insa/local/models/message.dart';
-import 'package:chatbot_insa/local/presentation/pages/connection_check.dart';
 import 'package:chatbot_insa/local/presentation/providers/messages_state_provider.dart';
 import 'package:chatbot_insa/local/presentation/widgets/loading_message.dart';
 import 'package:chatbot_insa/local/presentation/widgets/message_widget.dart';
@@ -13,7 +12,9 @@ import '../../config/app_theme.dart';
 
 
 class ChatZone extends ConsumerStatefulWidget {
-  const ChatZone({Key? key}) : super(key: key);
+  final ValueChanged<bool> update;
+
+  const ChatZone({required this.update, super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatZoneState();
