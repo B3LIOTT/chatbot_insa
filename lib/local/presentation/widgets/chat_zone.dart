@@ -5,11 +5,11 @@ import 'package:chatbot_insa/local/presentation/widgets/message_widget.dart';
 import 'package:chatbot_insa/local/presentation/widgets/pop_up.dart';
 import 'package:chatbot_insa/remote/messages_state.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../config/app_theme.dart';
+
 
 class ChatZone extends ConsumerStatefulWidget {
   const ChatZone({Key? key}) : super(key: key);
@@ -87,9 +87,12 @@ class _ChatZoneState extends ConsumerState<ChatZone>
             reverse: false,
             controller: _controller,
             physics: const BouncingScrollPhysics(),
-            itemCount: messages.length + 1,
+            itemCount: messages.length + 2,
             itemBuilder: (context, index) {
-              if (index == messages.length) {
+              if(index == 0) {
+                return SizedBox(height: MediaQuery.of(context).size.height * 0.1);
+              }
+              if (index == messages.length+1) {
                 return Column(
                   children: [
                     state.isLoading
@@ -102,15 +105,16 @@ class _ChatZoneState extends ConsumerState<ChatZone>
                   ],
                 );
               }
-              bool animationCond = (state.newMessageId == messages[index].id);
+              int messageIndex = index - 1;
+              bool animationCond = (state.newMessageId == messages[messageIndex].id);
 
-              if (messages[index].sender == 'user') {
+              if (messages[messageIndex].sender == 'user') {
                 final theme = AppTheme.getUserTheme();
                 return Align(
                   alignment: Alignment.centerRight,
                   child: MessageWidget(
                       animate: animationCond,
-                      message: messages[index],
+                      message: messages[messageIndex],
                       theme: theme),
                 );
               } else {
@@ -119,7 +123,7 @@ class _ChatZoneState extends ConsumerState<ChatZone>
                   alignment: Alignment.centerLeft,
                   child: MessageWidget(
                       animate: animationCond,
-                      message: messages[index],
+                      message: messages[messageIndex],
                       theme: theme),
                 );
               }

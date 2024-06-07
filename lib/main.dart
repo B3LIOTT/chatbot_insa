@@ -38,7 +38,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Chat-Bot-INSA',
-      home: HomePage(),
+      home: const HomePage(),
       theme: ThemeData(
         useMaterial3: true,
       )

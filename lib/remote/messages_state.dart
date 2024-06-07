@@ -8,6 +8,7 @@ class MessagesState {
   final bool hasError;
   final int newMessageId;
   final List<Message> messages;
+  final bool isSocketConnected;
 
 
   const MessagesState({
@@ -15,6 +16,7 @@ class MessagesState {
     this.hasError = false,
     this.newMessageId = -1,
     this.messages = const [],
+    this.isSocketConnected = true,
   });
 
   copyWith({
@@ -22,12 +24,14 @@ class MessagesState {
     bool? hasError,
     int? newMessageId,
     List<Message>? messages,
+    bool? isSocketConnected,
   }) {
     return MessagesState(
       isLoading: isLoading ?? this.isLoading,
       hasError: hasError ?? this.hasError,
       newMessageId: newMessageId ?? this.newMessageId,
       messages: messages ?? this.messages,
+      isSocketConnected: isSocketConnected ?? this.isSocketConnected,
     );
   }
 
