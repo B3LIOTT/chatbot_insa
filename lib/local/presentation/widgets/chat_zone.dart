@@ -81,6 +81,9 @@ class _ChatZoneState extends ConsumerState<ChatZone>
     if (state.hasError) {
       _loadPopup("An error occurred while fetching messages", state);
     }
+    if (!state.isConnected) {
+      widget.update(false);
+    }
 
     return Column(
       children: [

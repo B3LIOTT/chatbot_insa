@@ -13,7 +13,7 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     isLoading: false,
     hasError: false,
     messages: LocalStorage.getMessages(),
-    isSocketConnected: false,
+    isConnected: false,
   ));
 
   void updateState(MessagesState newState) {
@@ -67,21 +67,20 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
 
 
   void initSocket() {
-    try {
       socket.connect();
 
       socket.onConnect((_) {
         if (kDebugMode) {
           print('Connected to the server');
         }
-        updateState(state.copyWith(isSocketConnected: true));
+        updateState(state.copyWith(isConnected: true));
       });
 
       socket.onDisconnect((_) {
         if(kDebugMode) {
           print('Disconnected from the server');
         }
-        updateState(state.copyWith(isLoading: false, isSocketConnected: false));
+        updateState(state.copyWith(isLoading: false, isConnected: false));
       });
 
       socket.on(EnvLoader.loadingEvent, (data) {
@@ -110,13 +109,11 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
         if(kDebugMode) {
           print('Disconnected from the server');
         }
-        updateState(state.copyWith(isLoading: false, isSocketConnected: false));
+        updateState(state.copyWith(isLoading: false, isConnected: false));
       });
 
-      socket.onError((data) => updateState(const MessagesState(hasError: true, isSocketConnected: false)));
-    } catch (e) {
-      updateState(const MessagesState(hasError: true, isSocketConnected: false));
-    }
+      //socket.onError((data) => updateState(const MessagesState(hasError: true, isConnected: false)));
+      socket.onError((data) => updateState(state.copyWith(isConnected: true)));
   }
 
 

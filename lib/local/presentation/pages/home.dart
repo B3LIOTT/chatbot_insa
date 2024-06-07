@@ -14,11 +14,12 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  bool _isSocketConnected = false;
+  bool _isConnected = false;
+
 
   void _updateSocketStatus(bool status) {
     setState(() {
-      _isSocketConnected = status;
+      _isConnected = status;
     });
   }
 
@@ -29,7 +30,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
       backgroundColor: AppTheme.white,
       body: SafeArea(
-        child: _isSocketConnected? Stack(
+        child: _isConnected? Stack(
           children: [
             ChatZone(update: _updateSocketStatus),
             Align(

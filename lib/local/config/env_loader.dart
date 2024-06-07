@@ -17,6 +17,13 @@ class EnvLoader {
   static Future<void> initEnv() async {
     socketAddress = 'https://fffff';
     apiKEY = 'fffff';
+    socketUrl = 'https://fffff';
+    receivedMessageEvent = 'fffff';
+    sendMessageEvent = 'fffff';
+    loadingEvent = 'fffff';
+    disconnectEvent = 'fffff';
+    rejectMessageEvent = 'fffff';
+    serverUrl = 'https://fffff';
 /*    await dotenv.load(fileName: ".env");
     serverUrl = dotenv.get('SERVER_URL', fallback: '');
     socketAddress = dotenv.get('SOCKET_ADDRESS', fallback: '');

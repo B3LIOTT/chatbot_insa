@@ -1,4 +1,5 @@
 import 'package:chatbot_insa/local/config/app_theme.dart';
+import 'package:chatbot_insa/local/presentation/providers/messages_state_provider.dart';
 import 'package:chatbot_insa/local/presentation/widgets/loading.dart';
 import 'package:chatbot_insa/remote/request_handler.dart';
 import 'package:flutter/foundation.dart';
@@ -45,8 +46,8 @@ class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
       // TODO: à enlever, c'est pour l'exemple
       await Future.delayed(const Duration(seconds: 2));
 
-      await getAccessToken();
-      widget.update(true);
+      //await getAccessToken();
+      ref.read(messagesStateProvider.notifier).initSocket();
 
     } catch (e) {
       if (kDebugMode) {
@@ -86,9 +87,21 @@ class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
     );
   }
 
+  void _backPropagateSucess() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.update(true);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
+    final state = ref.watch(messagesStateProvider);
+    print(state);
+    if (state.isConnected) {
+      _backPropagateSucess();
+    }
+
     return Stack(
       children: [
         mainW,

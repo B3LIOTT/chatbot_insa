@@ -8,7 +8,7 @@ class MessagesState {
   final bool hasError;
   final int newMessageId;
   final List<Message> messages;
-  final bool isSocketConnected;
+  final bool isConnected;
 
 
   const MessagesState({
@@ -16,7 +16,7 @@ class MessagesState {
     this.hasError = false,
     this.newMessageId = -1,
     this.messages = const [],
-    this.isSocketConnected = true,
+    this.isConnected = true,
   });
 
   copyWith({
@@ -24,15 +24,20 @@ class MessagesState {
     bool? hasError,
     int? newMessageId,
     List<Message>? messages,
-    bool? isSocketConnected,
+    bool? isConnected,
   }) {
     return MessagesState(
       isLoading: isLoading ?? this.isLoading,
       hasError: hasError ?? this.hasError,
       newMessageId: newMessageId ?? this.newMessageId,
       messages: messages ?? this.messages,
-      isSocketConnected: isSocketConnected ?? this.isSocketConnected,
+      isConnected: isConnected ?? this.isConnected,
     );
+  }
+
+  @override
+  String toString() {
+    return 'MessagesState{isLoading: $isLoading, hasError: $hasError, newMessageId: $newMessageId, messages: $messages, isConnected: $isConnected}';
   }
 
 }
