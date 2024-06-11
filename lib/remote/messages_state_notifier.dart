@@ -3,7 +3,7 @@ import 'package:chatbot_insa/local/models/message.dart';
 import 'package:chatbot_insa/local/storage/local_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:socket_io_client/socket_io_client.dart' as io;
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'messages_state.dart';
 
 
@@ -26,8 +26,8 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     Message newMessage = Message(
       id: id,
       message: message,
-      sender: "user",
-      receiver: "bot",
+      sender: sender,
+      receiver: receiver,
       timestamp: DateTime.now().toIso8601String(),
       hasError: false,
     );
@@ -36,7 +36,7 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     updateState(newMessagesState);
     LocalStorage.setMessages(newMessages);
 
-    // Simulate bot response
+    /*// Simulate bot response
     await Future.delayed(const Duration(seconds: 1), () {
       final newMessagesState = MessagesState(messages: newMessages, isLoading: true);
       updateState(newMessagesState);
@@ -55,20 +55,17 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
       final newMessagesState = MessagesState(messages: newMessages, newMessageId: id);
       updateState(newMessagesState);
       LocalStorage.setMessages(newMessages);
-    });
+    });*/
   }
 
 
-  io.Socket socket = io.io(EnvLoader.socketAddress, <String, dynamic>{
+  IO.Socket socket = IO.io('https://fbxeliott.freeboxos.fr:44444', <String, dynamic>{
     'transports': ['websocket'],
-    'extraHeaders': {'x-api-key': EnvLoader.apiKEY},
     'autoConnect': false,
   });
 
 
   void initSocket() {
-      socket.connect();
-
       socket.onConnect((_) {
         if (kDebugMode) {
           print('Connected to the server');
@@ -87,7 +84,7 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
         if (kDebugMode) {
           print('Received loading event from server: $data');
         }
-        updateState(const MessagesState(isLoading: true));
+        updateState(state.copyWith(isLoading: true));
       });
 
       socket.on(EnvLoader.receivedMessageEvent, (data) {
@@ -112,16 +109,27 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
         updateState(state.copyWith(isLoading: false, isConnected: false));
       });
 
-      //socket.onError((data) => updateState(const MessagesState(hasError: true, isConnected: false)));
-      socket.onError((data) => updateState(state.copyWith(isConnected: true)));
+      socket.onError((data) {
+        print('Error: $data');
+        updateState(const MessagesState(hasError: true, isConnected: false));
+      });
+      //socket.onError((data) => updateState(state.copyWith(isConnected: true)));
+
+    socket.connect();
   }
 
 
   void sendMessage({
     required String message,
-  }) => socket.emit(EnvLoader.sendMessageEvent, {
-    'message': message,
-  });
+  }) {
+    socket.emit(EnvLoader.sendMessageEvent, {
+      'message': message,
+    });
+    if(kDebugMode) {
+      print('Sent message to the server: $message');
+    }
+    addMessage(message: message, sender: 'user', receiver: 'bot');
+  }
 
   void disconnect() {
     socket.emit(EnvLoader.disconnectEvent, {});

@@ -15,14 +15,14 @@ class EnvLoader {
 
 
   static Future<void> initEnv() async {
-    socketAddress = 'https://fffff';
+    socketAddress = 'https://fbxeliott.freeboxos.fr:44444';
     apiKEY = 'fffff';
-    socketUrl = 'https://fffff';
-    receivedMessageEvent = 'fffff';
-    sendMessageEvent = 'fffff';
-    loadingEvent = 'fffff';
-    disconnectEvent = 'fffff';
-    rejectMessageEvent = 'fffff';
+    socketUrl = 'https://fbxeliott.freeboxos.fr:44444';
+    receivedMessageEvent = 'message';
+    sendMessageEvent = 'message';
+    loadingEvent = 'loading';
+    disconnectEvent = 'disconnect';
+    rejectMessageEvent = 'reject';
     serverUrl = 'https://fffff';
 /*    await dotenv.load(fileName: ".env");
     serverUrl = dotenv.get('SERVER_URL', fallback: '');

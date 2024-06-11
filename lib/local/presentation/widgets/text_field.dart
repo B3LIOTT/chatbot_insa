@@ -16,7 +16,7 @@ class PromptTextFiled extends ConsumerStatefulWidget {
 
 class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTickerProviderStateMixin {
   String _message = "";
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   late AnimationController _ac;
   late Animation<double> _a;
 
@@ -68,10 +68,8 @@ class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTi
                       onPressed: () {
                         HapticFeedback.lightImpact();
                         if (_message.isEmpty) return;
-                        ref.read(messagesStateProvider.notifier).addMessage(
+                        ref.read(messagesStateProvider.notifier).sendMessage(
                             message: _message,
-                            sender: "user",
-                            receiver: "bot"
                         );
                         _ac.forward();
                         _controller.clear();
