@@ -95,11 +95,11 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
         addWord(word: data['word']);
       });
 
-      socket.on(EnvLoader.rejectMessageEvent, (data) {
+      socket.on(EnvLoader.errorEvent, (data) {
         if (kDebugMode) {
-          print('Received data from server: $data');
+          print('Received error from server: $data');
         }
-        addMessage(message: data['message'], sender: 'bot', receiver: 'user');
+        updateState(state.copyWith(hasError: true));
       });
 
       socket.on(EnvLoader.disconnectEvent, (data) {

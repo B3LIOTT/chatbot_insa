@@ -11,7 +11,7 @@ class EnvLoader {
   static late String sendMessageEvent;
   static late String loadingEvent;
   static late String disconnectEvent;
-  static late String rejectMessageEvent;
+  static late String errorEvent;
   static String accessTokenUrl = 'accessTokenApi'; // TODO: a changer
 
 
@@ -24,7 +24,7 @@ class EnvLoader {
     newWordEvent = 'word';
     loadingEvent = 'loading';
     disconnectEvent = 'disconnect';
-    rejectMessageEvent = 'reject';
+    errorEvent = 'error';
     serverUrl = 'https://fffff';
 /*    await dotenv.load(fileName: ".env");
     serverUrl = dotenv.get('SERVER_URL', fallback: '');
