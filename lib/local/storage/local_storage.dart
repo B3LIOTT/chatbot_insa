@@ -44,6 +44,10 @@ class LocalStorage {
   static Future<String> getAccessToken() async {
     return await sercurePrefs.read(key: 'access_token') ?? '';
   }
+
+  static Future<void> clearAccessToken() async {
+    await sercurePrefs.delete(key: 'access_token');
+  }
   // -------------------------------------------
 
 }

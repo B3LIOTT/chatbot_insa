@@ -1,6 +1,7 @@
 import 'package:chatbot_insa/local/config/app_theme.dart';
 import 'package:chatbot_insa/local/presentation/providers/messages_state_provider.dart';
 import 'package:chatbot_insa/local/presentation/widgets/loading.dart';
+import 'package:chatbot_insa/local/storage/local_storage.dart';
 import 'package:chatbot_insa/remote/request_handler.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,13 @@ class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
       // TODO: à enlever, c'est pour l'exemple
       await Future.delayed(const Duration(seconds: 2));
 
-      //await getAccessToken();
+      final token = await LocalStorage.getAccessToken();
+      if(token == "") {
+        await getAccessToken();
+      }
+      if (ref.read(messagesStateProvider.notifier).socket.connected) {
+        ref.read(messagesStateProvider.notifier).socket.dispose();
+      }
       ref.read(messagesStateProvider.notifier).initSocket();
 
     } catch (e) {

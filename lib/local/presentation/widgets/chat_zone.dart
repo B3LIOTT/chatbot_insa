@@ -59,7 +59,7 @@ class _ChatZoneState extends ConsumerState<ChatZone>
               ));
       ref
           .read(messagesStateProvider.notifier)
-          .updateState(state.copyWith(hasError: false));
+          .updateState(state.copyWith(hasError: false, isLoading: false));
     });
   }
 
@@ -67,7 +67,7 @@ class _ChatZoneState extends ConsumerState<ChatZone>
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _controller.animateTo(
         _controller.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 100),
         curve: Curves.ease,
       );
     });
@@ -79,7 +79,7 @@ class _ChatZoneState extends ConsumerState<ChatZone>
     List<Message> messages = state.messages;
     _scrollDown();
     if (state.hasError) {
-      _loadPopup("An error occurred while fetching messages", state);
+      _loadPopup("Une erreur est survenue", state);
     }
     if (!state.isConnected) {
       SchedulerBinding.instance.addPostFrameCallback((_) {

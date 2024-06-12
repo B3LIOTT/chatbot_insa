@@ -77,20 +77,20 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
 
       socket.on(EnvLoader.loadingEvent, (data) {
         if (kDebugMode) {
-          print('Received loading event from server: $data');
+          print('Received LOADING event from server: $data');
         }
         updateState(state.copyWith(isLoading: true));
       });
 
       socket.on(EnvLoader.receivedMessageEvent, (data) {
         if (kDebugMode) {
-          print('Received data from server: $data');
+          print('Received MESSAGE from server: $data');
         }
         addMessage(message: data['message'], sender: 'bot', receiver: 'user');
       });
       socket.on(EnvLoader.newWordEvent, (data) {
         if (kDebugMode) {
-          print('Received data from server: $data');
+          print('Received WORD from server: $data');
         }
         addWord(word: data['word']);
       });
@@ -114,10 +114,12 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
         if (kDebugMode) {
           print('Error: $data');
         }
+        socket.dispose();
         updateState(state.copyWith(hasError: true, isConnected: false));
       });
 
       socket.onDisconnect((_) {
+        socket.dispose();
         updateState(state.copyWith(isConnected: false));
       });
 
@@ -127,8 +129,13 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
 
   void sendMessage({
     required String message,
-  }) {
+  }) async {
+    if(state.isLoading) {
+      return;
+    }
+    String accessToken = await LocalStorage.getAccessToken();
     socket.emit(EnvLoader.sendMessageEvent, {
+      'access_token': accessToken,
       'message': message,
     });
     if(kDebugMode) {

@@ -3,6 +3,7 @@ import 'package:chatbot_insa/local/presentation/pages/connection_check.dart';
 import 'package:chatbot_insa/local/presentation/providers/messages_state_provider.dart';
 import 'package:chatbot_insa/local/presentation/widgets/chat_zone.dart';
 import 'package:chatbot_insa/local/presentation/widgets/text_field.dart';
+import 'package:chatbot_insa/local/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,7 +28,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void dispose() {
     super.dispose();
-    ref.read(messagesStateProvider.notifier).socket.disconnect();
+    ref.read(messagesStateProvider.notifier).socket.dispose();
+    LocalStorage.clearAccessToken();
   }
 
   @override

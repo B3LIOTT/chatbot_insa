@@ -47,6 +47,12 @@ class _MessageWidgetState extends State<MessageWidget> with SingleTickerProvider
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<Widget> metadata = [
       Card(

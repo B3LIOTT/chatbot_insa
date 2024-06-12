@@ -6,13 +6,15 @@ import 'package:http/http.dart' as http;
 
 
 Future<void> getAccessToken() async {
-  try {
-    var res = await http.Client().get(
+    var res = await http.Client().post(
         Uri.parse(
             '${EnvLoader.serverUrl}/${EnvLoader.accessTokenUrl}'),
-        headers: <String, String>{
-          'x-api-key': EnvLoader.apiKEY,
-        }).timeout(const Duration(seconds: 10),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'API_KEY': EnvLoader.apiKEY,
+        })).timeout(const Duration(seconds: 10),
         onTimeout: () => http.Response("timeout", 408));
 
     if (res.statusCode == 200) {
@@ -22,7 +24,4 @@ Future<void> getAccessToken() async {
     } else {
       throw Exception('Status code error: ${res.statusCode}');
     }
-  } catch (e) {
-    throw Exception('Failed to load data');
-  }
 }
