@@ -20,7 +20,7 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     state = newState;
   }
 
-  Future<void> addMessage({required String message, required String sender, required String receiver, bool hasError = false}) async {
+  void addMessage({required String message, required String sender, required String receiver, bool hasError = false}) {
     int nMessage = state.messages.length;
     int id = nMessage + 1;
     Message newMessage = Message(
@@ -35,27 +35,22 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     final newMessagesState = MessagesState(messages: newMessages, newMessageId: id);
     updateState(newMessagesState);
     LocalStorage.setMessages(newMessages);
+  }
 
-    /*// Simulate bot response
-    await Future.delayed(const Duration(seconds: 1), () {
-      final newMessagesState = MessagesState(messages: newMessages, isLoading: true);
-      updateState(newMessagesState);
-    });
-    Future.delayed(const Duration(seconds: 2), () {
-      int nMessage = state.messages.length;
-      int id = nMessage + 1;
-      Message newMessage = Message(
-        id: id,
-        message: "Tg.",
-        sender: "bot",
-        receiver: "user",
-        timestamp: DateTime.now().toIso8601String(),
-      );
-      List<Message> newMessages = List.from(state.messages)..add(newMessage);
-      final newMessagesState = MessagesState(messages: newMessages, newMessageId: id);
-      updateState(newMessagesState);
-      LocalStorage.setMessages(newMessages);
-    });*/
+  void addWord({required String word}) {
+    int nMessage = state.messages.length;
+    Message updatedMessage = Message(
+      id: nMessage,
+      message: '${state.messages[nMessage - 1].message} $word',
+      sender: 'bot',
+      receiver: 'user',
+      timestamp: DateTime.now().toIso8601String(),
+      hasError: false,
+    );
+    List<Message> newMessages = List.from(state.messages)..removeLast()..add(updatedMessage);
+    final newMessagesState = MessagesState(messages: newMessages, newMessageId: -1);
+    updateState(newMessagesState);
+    LocalStorage.setMessages(newMessages);
   }
 
 
@@ -93,6 +88,12 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
         }
         addMessage(message: data['message'], sender: 'bot', receiver: 'user');
       });
+      socket.on(EnvLoader.newWordEvent, (data) {
+        if (kDebugMode) {
+          print('Received data from server: $data');
+        }
+        addWord(word: data['word']);
+      });
 
       socket.on(EnvLoader.rejectMessageEvent, (data) {
         if (kDebugMode) {
@@ -110,10 +111,15 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
       });
 
       socket.onError((data) {
-        print('Error: $data');
-        updateState(const MessagesState(hasError: true, isConnected: false));
+        if (kDebugMode) {
+          print('Error: $data');
+        }
+        updateState(state.copyWith(hasError: true, isConnected: false));
       });
-      //socket.onError((data) => updateState(state.copyWith(isConnected: true)));
+
+      socket.onDisconnect((_) {
+        updateState(state.copyWith(isConnected: false));
+      });
 
     socket.connect();
   }
@@ -132,7 +138,6 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
   }
 
   void disconnect() {
-    socket.emit(EnvLoader.disconnectEvent, {});
     socket.disconnect();
     if(kDebugMode) {
       print('Disconnected from the server');

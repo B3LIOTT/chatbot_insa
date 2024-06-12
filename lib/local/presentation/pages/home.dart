@@ -1,5 +1,6 @@
 import 'package:chatbot_insa/local/config/app_theme.dart';
 import 'package:chatbot_insa/local/presentation/pages/connection_check.dart';
+import 'package:chatbot_insa/local/presentation/providers/messages_state_provider.dart';
 import 'package:chatbot_insa/local/presentation/widgets/chat_zone.dart';
 import 'package:chatbot_insa/local/presentation/widgets/text_field.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,12 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    ref.read(messagesStateProvider.notifier).socket.disconnect();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final h = MediaQuery.of(context).size.height;
 
@@ -36,7 +43,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                height: h*0.1,
+                height: h*0.08,
                 decoration: BoxDecoration(
                     color: AppTheme.white,
                     borderRadius: const BorderRadius.only(
@@ -57,15 +64,31 @@ class _HomePageState extends ConsumerState<HomePage> {
                       )
                     ]
                 ),
-                child: const Center(
-                  child: Text(
-                    "ChatBot INSA",
-                    style: TextStyle(
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RichText(
+                      text: const TextSpan(
+                          style: TextStyle(
+                              fontSize: 30,
+                              wordSpacing: 0,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 3
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(text: 'Talk', style: TextStyle(color: AppTheme.primaryColor,)),
+                            TextSpan(text: ' 2', style: TextStyle(color: AppTheme.red,)),
+                            TextSpan(text: ' Eve', style: TextStyle(color: AppTheme.secondaryColor,)),
+                          ],
+                        ),
+                      ),
+                      const Icon(
+                        Icons.search,
                         color: AppTheme.primaryColor,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: 5
-                    ),
+                        size: 30,
+                      )
+                    ],
                   ),
                 ),
               ),

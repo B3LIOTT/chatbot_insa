@@ -93,6 +93,9 @@ class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTi
         borderRadius: BorderRadius.circular(20)
       ),
       child: TextField(
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(2048),
+        ],
         onTapOutside: (event) {
           //FocusScope.of(context).unfocus();
         },
@@ -121,9 +124,9 @@ class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTi
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
-    double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Container(
       height: 100,

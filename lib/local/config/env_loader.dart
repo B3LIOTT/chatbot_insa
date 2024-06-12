@@ -7,6 +7,7 @@ class EnvLoader {
   static late String apiKEY;
   static late String socketUrl;
   static late String receivedMessageEvent;
+  static late String newWordEvent;
   static late String sendMessageEvent;
   static late String loadingEvent;
   static late String disconnectEvent;
@@ -20,6 +21,7 @@ class EnvLoader {
     socketUrl = 'https://fbxeliott.freeboxos.fr:44444';
     receivedMessageEvent = 'message';
     sendMessageEvent = 'message';
+    newWordEvent = 'word';
     loadingEvent = 'loading';
     disconnectEvent = 'disconnect';
     rejectMessageEvent = 'reject';

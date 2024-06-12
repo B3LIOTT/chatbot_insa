@@ -48,79 +48,80 @@ class _MessageWidgetState extends State<MessageWidget> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> metadata = [
+      Card(
+        elevation: 6,
+        surfaceTintColor: AppTheme.white,
+        color: widget.theme['ui']!,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Icon(
+            widget.message.sender=='user'? Icons.person : Icons.computer,
+            color: AppTheme.white,
+            size: 10,
+          ),
+        ),
+      ),
+      Card(
+          elevation: 6,
+          surfaceTintColor: AppTheme.white,
+          color: widget.theme['ui']!,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "${DateTime.parse(widget.message.timestamp).hour}:${DateTime.parse(widget.message.timestamp).minute}",
+              style: const TextStyle(color: AppTheme.white, fontSize: 10),
+            ),)
+      ),
+    ];
     List<Widget> children = [
-      Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Card(
-            elevation: 6,
-            shadowColor: AppTheme.black.withOpacity(0.8),
-            shape: RoundedRectangleBorder(
+      Card(
+        elevation: 6,
+        shadowColor: AppTheme.black.withOpacity(0.8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        margin: const EdgeInsets.all(8),
+        child: Container(
+          constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.9,
+        ),
+          margin: const EdgeInsets.all(0),
+          decoration: BoxDecoration(
+              color: !widget.message.hasError? AppTheme.white : AppTheme.red.withOpacity(0.1),
               borderRadius: BorderRadius.circular(20),
-            ),
-            margin: const EdgeInsets.all(8),
-            child: Container(
-              constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.7,
-            ),
-              margin: const EdgeInsets.all(0),
-              decoration: BoxDecoration(
-                  color: !widget.message.hasError? AppTheme.white : AppTheme.red.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border(
-                    bottom: BorderSide(width: 4, color:  !widget.message.hasError? widget.theme['ui']! : AppTheme.red),
-                  )
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                  child: !widget.message.hasError
-                      ? Text(
-                    widget.message.message,
-                    style: TextStyle(color: widget.theme['text'], fontSize: 20),
-                  )
-                      : const Text(
-                    "Erreur",
-                    style: TextStyle(
-                        color: AppTheme.red, fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-          )),
-      Column(
-        children: [
-          Card(
-            elevation: 6,
-            surfaceTintColor: AppTheme.white,
-            color: widget.theme['ui']!,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
-            ),
+              border: Border(
+                bottom: BorderSide(width: 4, color:  !widget.message.hasError? widget.theme['ui']! : AppTheme.red),
+              )
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                widget.message.sender=='user'? Icons.person : Icons.computer,
-                color: AppTheme.white,
-                size: 10,
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              child: !widget.message.hasError
+                  ? Text(
+                widget.message.message,
+                style: TextStyle(color: widget.theme['text'], fontSize: 16),
+              )
+                  : const Text(
+                "Erreur",
+                style: TextStyle(
+                    color: AppTheme.red, fontSize: 20),
               ),
             ),
           ),
-          Card(
-              elevation: 6,
-              surfaceTintColor: AppTheme.white,
-              color: widget.theme['ui']!,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "${DateTime.parse(widget.message.timestamp).hour}:${DateTime.parse(widget.message.timestamp).minute}",
-                  style: const TextStyle(color: AppTheme.white, fontSize: 10),
-                ),)
-          ),
-        ],
+        ),
+      ),
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: widget.message.sender == 'bot'? metadata
+        : metadata.reversed.toList()
       ),
     ];
 
@@ -129,12 +130,10 @@ class _MessageWidgetState extends State<MessageWidget> with SingleTickerProvider
       builder: (BuildContext context, Widget? child) {
         return Transform.scale(
           scale: widget.animate? _animation.value : 1,
-          child: Row(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: widget.message.sender == 'bot'
-                ? children.reversed.toList()
-                : children,
+            crossAxisAlignment: widget.message.sender == 'bot'? CrossAxisAlignment.start : CrossAxisAlignment.end,
+            children: children,
           ),
         );
       },

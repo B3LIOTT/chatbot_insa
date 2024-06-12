@@ -82,10 +82,12 @@ class _ChatZoneState extends ConsumerState<ChatZone>
       _loadPopup("An error occurred while fetching messages", state);
     }
     if (!state.isConnected) {
-      widget.update(false);
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        widget.update(false);
+      });
     }
 
-    return Column(
+    return Column(  
       children: [
         Expanded(
           child: ListView.builder(
