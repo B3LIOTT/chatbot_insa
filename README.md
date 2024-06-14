@@ -1,11 +1,15 @@
-# Talk2Eve
+# Talk2Eve - Flutter app
 
-Cette application Flutter à été réalisée dans le cadre d'un projet de ChatBot à l'INSA Haut De France.
+This repository contains the mobile application of Talk2Eve-AI, which is a Python based chatbot that revolves around using the MITRE ATT&CK knowledge base.
 
-## Fonctionnement
-- connexion HTTPS au middleware pour demander un access token (avec la clé api contenue dans les variables d'environnement)
-- connexion en socket TLS au middleware qui se charge de transmettre les messages client vers les modèles d'IA, et de faire de même pour le retour
-- gestion de l'affichage avec riverpod, un provider qui ici permet de mettre à jour l'etat de connexion au serveur, et l'état de la discussion en fonction des évenements sockets
+# Installation
+1. Clone the repository
+  
+2. Install the required packages specified in the `pubspec.yaml``.
+```flutter pub get```
 
-## Architechture
-Voir le fichier ```archi.png```.
+3. Compile the app
+By default, ```flutter run``` compiles to debug mode.
+The command ```flutter run --release``` compiles to release mode.
+You can compile to release mode for a specific target with ```flutter build <target>```.
+
