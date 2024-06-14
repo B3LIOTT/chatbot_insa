@@ -6,7 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/messages_state_provider.dart';
 
-
+/// Widget permettant d'afficher un champ de texte pour envoyer un message
+///
 class PromptTextFiled extends ConsumerStatefulWidget {
   const PromptTextFiled({super.key});
 
@@ -23,6 +24,7 @@ class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTi
 
   @override
   void initState() {
+    // Initialisation de l'animation du bouton d'envoi
     _ac = AnimationController(
         duration: const Duration(milliseconds: 200), vsync: this);
     _a = Tween<double>(
@@ -41,7 +43,8 @@ class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTi
     super.initState();
   }
 
-
+  /// Bouton d'envoi
+  ///
   Widget sendButton() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -84,6 +87,8 @@ class _PromptTextFiledState extends ConsumerState<PromptTextFiled> with SingleTi
     );
   }
 
+  /// Champ de texte
+  ///
   Card txtField() {
     return Card(
       elevation: 4,
