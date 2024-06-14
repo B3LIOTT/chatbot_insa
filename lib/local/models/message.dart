@@ -1,5 +1,6 @@
 import 'package:chatbot_insa/local/config/exceptions.dart';
 
+// Objet Message représentant les messages affichés dans la zone de chat
 
 class Message {
   final int id;
@@ -18,6 +19,7 @@ class Message {
     required this.timestamp,
   });
 
+  // Constructeur de Message à partir d'un json (venant du socket)
   factory Message.fromJson(Map<String, dynamic> json) {
     try {
       return Message(
@@ -33,6 +35,7 @@ class Message {
     }
   }
 
+  // Convertion en json
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -44,6 +47,7 @@ class Message {
     };
   }
 
+  // Convertion en json spécifique pour le socket
   Map<String, dynamic> toSocket() {
     return {
       'message': message,
