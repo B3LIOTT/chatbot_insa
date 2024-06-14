@@ -11,6 +11,7 @@ class AppTheme {
   static const Color txtFieldColor = Color(0xFFE0E0E0);
   static const Color txtFieldContainer = Color(0xFFBDBDBD);
 
+  /// Récupération du theme user pour le [MessageWidget]
   static Map<String, Color> getUserTheme() {
     return {
       'ui': primaryColor,
@@ -18,6 +19,7 @@ class AppTheme {
     };
   }
 
+  /// Récupération du theme bot pour le [MessageWidget]
   static Map<String, Color> getBotTheme() {
     return {
       'ui': secondaryColor,
