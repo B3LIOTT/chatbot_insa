@@ -1,16 +1,8 @@
-# chatbot_insa
+# Talk2Eve
 
-A new Flutter project.
+Cette application Flutter à été réalisée dans le cadre d'un projet de ChatBot à l'INSA Haut De France.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Fonctionnement
+- connexion HTTPS au middleware pour demander un access token (avec la clé api contenue dans les variables d'environnement)
+- connexion en socket TLS au middleware qui se charge de transmettre les messages client vers les modèles d'IA, et de faire de même pour le retour
+- gestion de l'affichage avec riverpod, un provider qui ici permet de mettre à jour l'etat de connexion au serveur, et l'état de la discussion en fonction des évenements sockets
