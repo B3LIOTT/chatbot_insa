@@ -1,5 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+// Variables d'environnement de l'app (en partie stockées dans .env pour les infos sensibles)
 
 class EnvLoader {
   static late String serverUrl;
