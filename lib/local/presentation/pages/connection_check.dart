@@ -39,6 +39,8 @@ class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
 
   Future<void> _initUserData() async {
     try {
+      LocalStorage.clearAccessToken();
+
       setState(() {
         mainW = const Loading();
         _showBtn = false;

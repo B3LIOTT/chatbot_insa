@@ -73,6 +73,7 @@ class _ChatZoneState extends ConsumerState<ChatZone>
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(messagesStateProvider);

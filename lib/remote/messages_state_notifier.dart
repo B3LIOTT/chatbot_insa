@@ -54,7 +54,7 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
   }
 
 
-  IO.Socket socket = IO.io('https://fbxeliott.freeboxos.fr:44444', <String, dynamic>{
+  IO.Socket socket = IO.io(EnvLoader.socketUrl, <String, dynamic>{
     'transports': ['websocket'],
     'autoConnect': false,
   });

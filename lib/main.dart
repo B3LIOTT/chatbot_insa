@@ -51,9 +51,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Chat-Bot-INSA',
+      title: 'Talk2Eve',
       home: const HomePage(),
       theme: ThemeData(
+        fontFamily: 'Roboto',
         useMaterial3: true,
       )
     );

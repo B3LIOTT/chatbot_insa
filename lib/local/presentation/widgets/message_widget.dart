@@ -52,6 +52,7 @@ class _MessageWidgetState extends State<MessageWidget> with SingleTickerProvider
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
     List<Widget> metadata = [
@@ -113,7 +114,9 @@ class _MessageWidgetState extends State<MessageWidget> with SingleTickerProvider
               child: !widget.message.hasError
                   ? Text(
                 widget.message.message,
-                style: TextStyle(color: widget.theme['text'], fontSize: 16),
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    color: widget.theme['text'], fontSize: 16),
               )
                   : const Text(
                 "Erreur",
