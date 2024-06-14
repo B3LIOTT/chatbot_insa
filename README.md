@@ -5,7 +5,7 @@ This repository contains the mobile application of Talk2Eve-AI, which is a Pytho
 # Installation
 1. Clone the repository
   
-2. Install the required packages specified in the `pubspec.yaml``.
+2. Install the required packages specified in the `pubspec.yaml`.
 ```flutter pub get```
 
 3. Compile the app
