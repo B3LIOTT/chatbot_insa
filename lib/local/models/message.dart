@@ -19,7 +19,7 @@ class Message {
     required this.timestamp,
   });
 
-  // Constructeur de Message à partir d'un json (venant du socket)
+  /// Constructeur de Message à partir d'un json (venant du socket)
   factory Message.fromJson(Map<String, dynamic> json) {
     try {
       return Message(
@@ -35,7 +35,7 @@ class Message {
     }
   }
 
-  // Convertion en json
+  /// Convertion en json
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -47,7 +47,7 @@ class Message {
     };
   }
 
-  // Convertion en json spécifique pour le socket
+  /// Convertion en json spécifique pour le socket
   Map<String, dynamic> toSocket() {
     return {
       'message': message,
