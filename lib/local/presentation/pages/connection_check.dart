@@ -9,6 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
+/// Widget permettant de vérifier la connexion au serveur
+
 class ConnexionCheck extends ConsumerStatefulWidget {
   final ValueChanged<bool> update;
 
@@ -29,6 +31,7 @@ class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
     super.initState();
   }
 
+  /// Widget d'erreur qui affiche un message d'erreur
   Widget errW() {
     return const Scaffold(
       backgroundColor: AppTheme.white,
@@ -37,6 +40,11 @@ class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
     );
   }
 
+  /// Fonction permettant de récupérer le token d'accès, puis de l'enregistrer dans les shared preferences.
+  /// Puis initialise le socket de connexion
+  /// En cas d'erreur, affiche un message d'erreur
+  /// En cas de succès, met à jour le parent avec le statut de connexion
+  ///
   Future<void> _initUserData() async {
     try {
       LocalStorage.clearAccessToken();
@@ -45,9 +53,6 @@ class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
         mainW = const Loading();
         _showBtn = false;
       });
-
-      // TODO: à enlever, c'est pour l'exemple
-      await Future.delayed(const Duration(seconds: 2));
 
       final token = await LocalStorage.getAccessToken();
       if(token == "") {
@@ -70,6 +75,9 @@ class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
     }
   }
 
+
+  /// Bouton permettant de réessayer la connexion
+  ///
   Widget btn(double w) {
     return Card(
       elevation: 10,
@@ -96,6 +104,9 @@ class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
     );
   }
 
+  /// Fonction permettant de mettre à jour le parent avec le statut de connexion
+  /// Cela permet de mettre à jour l'interface en fonction de la connexion dans la page HomePage
+  ///
   void _backPropagateSucess() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.update(true);
@@ -106,7 +117,8 @@ class _ConnexionCheckState extends ConsumerState<ConnexionCheck> {
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     final state = ref.watch(messagesStateProvider);
-    print(state);
+
+    // Si la connexion est établie, on met à jour le parent
     if (state.isConnected) {
       _backPropagateSucess();
     }

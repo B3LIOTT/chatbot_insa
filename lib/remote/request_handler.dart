@@ -5,6 +5,8 @@ import 'package:chatbot_insa/local/storage/local_storage.dart';
 import 'package:http/http.dart' as http;
 
 
+/// Réquête pour obtenir un token d'accès
+///
 Future<void> getAccessToken() async {
     var res = await http.Client().post(
         Uri.parse(

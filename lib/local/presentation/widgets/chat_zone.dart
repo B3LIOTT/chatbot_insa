@@ -11,6 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../config/app_theme.dart';
 
 
+/// Widget qui affiche la zone de chat
+///
 class ChatZone extends ConsumerStatefulWidget {
   final ValueChanged<bool> update;
 
@@ -38,11 +40,14 @@ class _ChatZoneState extends ConsumerState<ChatZone>
     super.dispose();
   }
 
+  // Lors de l"ouverture du clavier, on scroll en bas
   @override
   void didChangeMetrics() {
     _scrollDown();
   }
 
+  /// Affiche une popup avec un message d'erreur
+  ///
   void _loadPopup(String message, MessagesState state) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showDialog(
@@ -63,6 +68,9 @@ class _ChatZoneState extends ConsumerState<ChatZone>
     });
   }
 
+
+  /// Scroll en bas
+  ///
   void _scrollDown() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _controller.animateTo(
@@ -79,9 +87,13 @@ class _ChatZoneState extends ConsumerState<ChatZone>
     final state = ref.watch(messagesStateProvider);
     List<Message> messages = state.messages;
     _scrollDown();
+
+    // gestion de l'erreur coté messages
     if (state.hasError) {
       _loadPopup("Une erreur est survenue", state);
     }
+
+    // gestion de la connexion
     if (!state.isConnected) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         widget.update(false);
@@ -97,9 +109,14 @@ class _ChatZoneState extends ConsumerState<ChatZone>
             physics: const BouncingScrollPhysics(),
             itemCount: messages.length + 2,
             itemBuilder: (context, index) {
+
+              // ---- PADDING ----
               if(index == 0) {
                 return SizedBox(height: MediaQuery.of(context).size.height * 0.1);
               }
+              // -----------------
+
+              // Animation de l'attente lors du traitement serveur
               if (index == messages.length+1) {
                 return Column(
                   children: [
@@ -113,6 +130,8 @@ class _ChatZoneState extends ConsumerState<ChatZone>
                   ],
                 );
               }
+
+              // condition d'animation du widget message (si l'id du message est celui du nouveau message)
               int messageIndex = index - 1;
               bool animationCond = (state.newMessageId == messages[messageIndex].id);
 

@@ -1,6 +1,10 @@
 import 'package:chatbot_insa/local/config/app_theme.dart';
 import 'package:flutter/material.dart';
 
+
+/// Widget qui affiche l'animation de chargement lors de l'attente d'une réponse
+/// du serveur
+///
 class LoadingMessageWidget extends StatefulWidget {
   const LoadingMessageWidget({
     Key? key,
@@ -20,6 +24,8 @@ class _LoadingMessageWidgetState extends State<LoadingMessageWidget> with Ticker
   @override
   void initState() {
     super.initState();
+
+    // création des animations
     _controllers = List<AnimationController>.generate(_dotCount, (index) {
       return AnimationController(
         duration: const Duration(milliseconds: 400),
@@ -62,6 +68,7 @@ class _LoadingMessageWidgetState extends State<LoadingMessageWidget> with Ticker
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
+          // Animamtion des points, chacuns décalés de _delayIncrement
           for (int i = 0; i < _dotCount; i++)
             AnimatedBuilder(
               animation: _controllers[i],

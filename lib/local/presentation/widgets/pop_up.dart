@@ -1,7 +1,8 @@
 import 'package:chatbot_insa/local/config/app_theme.dart';
 import 'package:flutter/material.dart';
 
-
+/// PopUp personnalisée pour afficher des messages d'erreurs
+///
 class PopUp extends StatelessWidget {
   final String title;
   final String content;

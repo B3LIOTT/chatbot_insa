@@ -1,6 +1,6 @@
 import 'package:chatbot_insa/local/config/exceptions.dart';
 
-// Objet Message représentant les messages affichés dans la zone de chat
+/// Objet Message représentant les messages affichés dans la zone de chat
 
 class Message {
   final int id;

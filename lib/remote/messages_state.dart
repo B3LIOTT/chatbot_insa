@@ -2,6 +2,10 @@ import 'package:chatbot_insa/local/models/message.dart';
 import 'package:flutter/material.dart';
 
 
+/// Classe qui représente l'état de la liste des messages
+/// de la connexion avec le serveur
+/// et des éventuelles erreurs
+///
 @immutable
 class MessagesState {
   final bool isLoading;
@@ -19,6 +23,9 @@ class MessagesState {
     this.isConnected = true,
   });
 
+
+  /// Méthode qui permet de copier l'état actuel avec des modifications précises
+  ///
   copyWith({
     bool? isLoading,
     bool? hasError,

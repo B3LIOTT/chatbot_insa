@@ -2,7 +2,7 @@ import 'package:chatbot_insa/local/config/app_theme.dart';
 import 'package:chatbot_insa/local/models/message.dart';
 import 'package:flutter/material.dart';
 
-
+/// Widget permettant d'afficher un [Message]
 class MessageWidget extends StatefulWidget {
   final Message message;
   final bool animate;
@@ -27,6 +27,8 @@ class _MessageWidgetState extends State<MessageWidget> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
+
+    // Initialisation de l'animation du widget s'il est nouveau (animate = true)
     _controller = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
@@ -55,6 +57,7 @@ class _MessageWidgetState extends State<MessageWidget> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+    // Liste des metadata à afficher (l'ordre dépend de l'envoyeur du message)
     List<Widget> metadata = [
       Card(
         elevation: 6,
@@ -87,6 +90,8 @@ class _MessageWidgetState extends State<MessageWidget> with SingleTickerProvider
             ),)
       ),
     ];
+
+    // Liste des widgets à afficher incluant le message et les metadata
     List<Widget> children = [
       Card(
         elevation: 6,

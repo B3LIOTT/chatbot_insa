@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
+/// Page principale de l'application
+/// Contient le chat et le champ de saisie
+/// Si la connexion est perdue, affiche un message de connexion
+///
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
@@ -18,7 +22,7 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   bool _isConnected = false;
 
-
+  /// Met à jour l'état de la connexion
   void _updateSocketStatus(bool status) {
     setState(() {
       _isConnected = status;

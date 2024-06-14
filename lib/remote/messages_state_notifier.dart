@@ -6,7 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'messages_state.dart';
 
-
+/// Classe qui permet de notifier les changements d'état de la connexion
+/// avec le serveur et de la liste des messages
+///
 class MessageStateNotifier extends StateNotifier<MessagesState> {
 
   MessageStateNotifier() : super(MessagesState(
@@ -16,10 +18,13 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     isConnected: false,
   ));
 
+  /// Méthode qui permet de mettre à jour l'état actuel
   void updateState(MessagesState newState) {
     state = newState;
   }
 
+  /// Méthode qui permet d'ajouter un message à la liste des messages
+  ///
   void addMessage({required String message, required String sender, required String receiver, bool hasError = false}) {
     int nMessage = state.messages.length;
     int id = nMessage + 1;
@@ -37,6 +42,9 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     LocalStorage.setMessages(newMessages);
   }
 
+  /// Méthode qui permet d'ajouter un mot au dernier message recu, basé sur le
+  /// mode stream de la reception des messages
+  ///
   void addWord({required String word}) {
     int nMessage = state.messages.length;
     Message updatedMessage = Message(
@@ -54,12 +62,16 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
   }
 
 
+  // Initialisation du socket
   IO.Socket socket = IO.io(EnvLoader.socketUrl, <String, dynamic>{
     'transports': ['websocket'],
     'autoConnect': false,
   });
 
 
+  /// Méthode qui permet d'initialiser le socket et de définir les différents
+  /// événements qui peuvent être reçus du serveur
+  ///
   void initSocket() {
       socket.onConnect((_) {
         if (kDebugMode) {
@@ -126,7 +138,8 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     socket.connect();
   }
 
-
+  /// Méthode qui permet d'envoyer un message au serveur
+  ///
   void sendMessage({
     required String message,
   }) async {
@@ -144,6 +157,10 @@ class MessageStateNotifier extends StateNotifier<MessagesState> {
     addMessage(message: message, sender: 'user', receiver: 'bot');
   }
 
+
+  /// Méthode qui permet de se déconnecter du serveur, pour éviter de laisser
+  /// des sockets ouverts inutilement
+  ///
   void disconnect() {
     socket.disconnect();
     if(kDebugMode) {
