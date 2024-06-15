@@ -11,11 +11,11 @@ flutter pub get
 ```
 
 4. Compile the app
-By default,
 ```bash
 flutter run
 ```
-compiles to debug mode.
+By default, compiles to debug mode.
+
 The command 
 ```bash
 flutter run --release
